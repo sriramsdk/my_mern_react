@@ -37,7 +37,7 @@ const DataList = () => {
       />
 
       {loading ? (
-        <p>Loading...</p>
+        <p>Loading....</p>
       ) : (
         <ul style={styles.list}>
           {filteredData.map(item => (
