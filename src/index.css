@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.login-page10 {
+  --login-bg: #1f2029;
+  --login-color: #c4c3ca;
+  --login-inner-height: 460px;
+  --login-inner-bg: #2a2b38;
+  --login-input: #c4c3ca;
+  --login-input-bg: #1f2029;
+  --login-input-placeholder: #49475d;
+  --login-input-placeholder-active: #53e3a6;
+  --login-input-bg-hover: #191821;
+  --login-input-bg-focus: #23222e;
+  --login-input-shadow: 0 4px 8px 0 rgba(21, 21, 21, 0.2);
+  --login-btn: #fff;
+  --login-btn-bg: #a7e245;
+  --login-btn-focus: white;
+  --login-btn-hover: #53e3a6;
+  --login-btn-active: #1aa97d;
+  --login-footer: #ffffff99;
+  --login-icon-color: #ffeba7;
+  --login-icon-toggle-color: #102770;
+}
