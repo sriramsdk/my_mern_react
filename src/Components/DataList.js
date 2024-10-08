@@ -10,8 +10,8 @@ const DataList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://visiting-lura-sdkgroup-184d32b4.koyeb.app/notes');
-        // const response = await axios.get('http://localhost:3500/notes');
+        // const response = await axios.get('https://visiting-lura-sdkgroup-184d32b4.koyeb.app/notes');
+        const response = await axios.get('http://localhost:3500/notes');
         setData(response.data); // Assuming API returns an array
         setLoading(false);
       } catch (error) {
