@@ -10,6 +10,7 @@ const Register = () => {
         type:2 // 2 means its not from the postman or internal web
     });
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(false); // Add loading state
 
     const { username, password, roles, type } = formData;
 
@@ -20,6 +21,7 @@ const Register = () => {
 
     const onSubmit = async e => {
         e.preventDefault();
+        setLoading(true);
         try {
             const res = await axios.post(url+'users', {
                 username,
@@ -31,6 +33,8 @@ const Register = () => {
         } catch (err) {
             console.error(err.response.data);
             setMessage('Failed to register, User already exists'); // Set error message
+        } finally {
+            setLoading(false);  // Stop loading after the request completes
         }
     };
 
@@ -42,6 +46,12 @@ const Register = () => {
                 <input type="password" placeholder="Password" name="password" value={password} onChange={onChange} required />
                 <button type="submit">Register</button>
             </form>
+            {/* Show loader when loading is true */}
+            {loading && (
+                <div className="overlay">
+                    <div className="loader"></div>
+                </div>
+            )}
             <p className="message">{message}</p>
         </div>
     );
