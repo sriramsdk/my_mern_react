@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DataList from './Components/DataList';
 import Register from './Components/Register';
 import Login from './Components/Login';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 // import AddNewUser from './Components/AddNewUser';
 
 const App = () => {
@@ -23,24 +23,24 @@ const App = () => {
         }
     }, []);
 
-    const handleLogout = () => {
-        swal({
-            title: "Are you sure?",
-            text: "You will be logged out!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then((willLogout) => {
-            if (willLogout) {
-                localStorage.removeItem('token'); // Remove token from localStorage
-                localStorage.removeItem('user');  // Remove user from localStorage
-                localStorage.removeItem('role');  // Remove role from localStorage
-                setLoggedInUser(null); // Reset state
-                setLoggedInRole(null); // Reset state
-                swal("Logged out successfully!", { icon: "success" });
-            }
-        });
-    };
+    // const handleLogout = () => {
+    //     swal({
+    //         title: "Are you sure?",
+    //         text: "You will be logged out!",
+    //         icon: "warning",
+    //         buttons: true,
+    //         dangerMode: true,
+    //     }).then((willLogout) => {
+    //         if (willLogout) {
+    //             localStorage.removeItem('token'); // Remove token from localStorage
+    //             localStorage.removeItem('user');  // Remove user from localStorage
+    //             localStorage.removeItem('role');  // Remove role from localStorage
+    //             setLoggedInUser(null); // Reset state
+    //             setLoggedInRole(null); // Reset state
+    //             swal("Logged out successfully!", { icon: "success" });
+    //         }
+    //     });
+    // };
 
     const toggleAuth = () => {
         setIsLogin(!isLogin);

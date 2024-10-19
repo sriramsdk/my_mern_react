@@ -36,7 +36,7 @@ const Navbar = () => {
     });
 };
   return (
-    loggedInUser && (
+    (loggedInUser || loggedInRole) && (
       <nav className="navbar bg-primary">
         <div className="navbar-left">
           <p><b>{loggedInUser}</b></p>

@@ -88,7 +88,7 @@ const DataList = () => {
     },
     {
       name: 'Status',
-      selector: row => row.active == true ? "Active" : "Inactive",
+      selector: row => row.active === true ? "Active" : "Inactive",
       sortable:true,
     },
     {
@@ -160,7 +160,7 @@ const DataList = () => {
 };
 
   return (
-    loggedInUser && (
+    (loggedInUser || loggedInRole) && (
     <div style={styles.container}>
       {/* <h1>Data List</h1> */}
       
