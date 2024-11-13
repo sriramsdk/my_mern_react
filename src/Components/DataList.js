@@ -7,6 +7,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import swal from 'sweetalert'; // Import SweetAlert
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+// import { width } from '@fortawesome/free-solid-svg-icons/fa0';
 
 const DataList = () => {
   const [data, setData] = useState([]);
@@ -14,10 +15,11 @@ const DataList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [loggedInRole, setLoggedInRole] = useState(null);
-  const url = 'https://visiting-lura-sdkgroup-184d32b4.koyeb.app/';
+  const url = process.env.REACT_APP_API_URL;
   // const url = 'http://localhost:3500/';
   // Fetch data from Node.js API
   useEffect(() => {
+    const url = process.env.REACT_APP_API_URL;
     const user = localStorage.getItem('user');
     const role = localStorage.getItem('role');
     if (user) {
@@ -247,7 +249,35 @@ const DataList = () => {
           striped
           bordered
           responsive
+          customStyles={{
+            header: {
+              style: {
+                fontSize: '18px',
+                fontWeight: 'bold',
+              },
+            },
+            rows: {
+              style: {
+                minHeight: '45px', // override the row height
+              },
+            },
+            headCells: {
+              style: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                paddingLeft: '20px',
+                paddingRight: '20px',
+              },
+            },
+            cells: {
+              style: {
+                paddingLeft: '20px',
+                paddingRight: '20px',
+              },
+            },
+          }}
         />
+
         <AddUserModal />
         </>
       )}
@@ -259,19 +289,68 @@ const DataList = () => {
 // Simple styling for the component
 const styles = {
   container: {
-    width: '100%',
-    margin: 'auto',
+    // width: '100%',
+    height: '100%',
+    marginTop: '50px',
     padding: '20px',
     textAlign: 'center',
   },
+  header: {
+    marginBottom: '20px',
+  },
   searchInput: {
-    padding: '5px',
-    width: '50%',
-    marginTop: '0',
-    marginBottom: '10px',
-    marginRight: '20px',
+    padding: '10px',
+    width: '70%',
     fontSize: '16px',
+    borderRadius: '20px',
+    border: '1px solid #ced4da',
+    marginRight: '15px',
+  },
+  addButton: {
+    padding: '10px 20px',
+    fontSize: '16px',
+    backgroundColor: '#007bff',
+    border: 'none',
+    color: '#fff',
+    borderRadius: '20px',
+    cursor: 'pointer',
+  },
+  actionButtons: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  editButton: {
+    color: '#28a745',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '18px',
+    marginRight: '10px',
+  },
+  deleteButton: {
+    color: '#dc3545',
+    backgroundColor: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '18px',
+  },
+  '@media (max-width: 600px)': {
+    container: {
+      // padding: '10px',
+      // width: '50px',
+    },
+    searchInput: {
+      width: '100%',
+      marginBottom: '15px',
+    },
+    actionButtons: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   },
 };
+
 
 export default DataList;

@@ -1,3 +1,4 @@
+// require('dotenv').config();
 import React, { useState } from 'react';
 import axios from 'axios'; 
 import './style.css'; // Import CSS for styling
@@ -18,12 +19,12 @@ const Login = ({ setLoggedInUser, setLoggedInRole }) => {
         [e.target.name]: e.target.value
     });
     
-    const url = 'https://visiting-lura-sdkgroup-184d32b4.koyeb.app/';
-    // const url = 'http://localhost:3500/';
+    const url = process.env.REACT_APP_API_URL;
 
     const onSubmit = async e => {
         e.preventDefault();
         setLoading(true);  // Start loading when the form is submitted
+        console.log(url);
         try {
             const res = await axios.post(url + 'login', { username, password });
             // console.log(res.data.user_details);
