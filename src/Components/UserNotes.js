@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const NoteApp = () => {
   const [notes, setNotes] = useState([]);
-  const [currentNote, setCurrentNote] = useState('');
+  // const [currentNote, setCurrentNote] = useState('');
   const [currentIndex, setCurrentIndex] = useState(null);
 //   const url = process.env.REACT_APP_API_URL;
 
@@ -38,7 +38,7 @@ const NoteApp = () => {
         },
         body: JSON.stringify({ text: note }),
       });
-      console.log(response);return;
+      // console.log(response);return;
       const newNote = await response.json();
       setNotes([...notes, newNote]);
     } catch (error) {
@@ -60,39 +60,39 @@ const NoteApp = () => {
   };
 
   // Function to update note
-  const updateNote = async (index, updatedNote) => {
-    console.log(updatedNote);return;
-    try {
-      const noteId = notes[index]._id; // Assuming each note has a unique identifier
-      const response = await fetch(`https://api.example.com/notes/${noteId}`, { // Replace with your API URL
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ text: updatedNote }),
-      });
-      const updatedData = await response.json();
-      const updatedNotes = notes.map((note, i) =>
-        i === index ? updatedData : note
-      );
-      setNotes(updatedNotes);
-      setCurrentNote('');
-      setCurrentIndex(null);
-    } catch (error) {
-      console.error('Error updating note:', error);
-    }
-  };
+  // const updateNote = async (index, updatedNote) => {
+  //   // console.log(updatedNote);return;
+  //   try {
+  //     const noteId = notes[index]._id; // Assuming each note has a unique identifier
+  //     const response = await fetch(`https://api.example.com/notes/${noteId}`, { // Replace with your API URL
+  //       method: 'PUT',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ text: updatedNote }),
+  //     });
+  //     const updatedData = await response.json();
+  //     const updatedNotes = notes.map((note, i) =>
+  //       i === index ? updatedData : note
+  //     );
+  //     setNotes(updatedNotes);
+  //     setCurrentNote('');
+  //     setCurrentIndex(null);
+  //   } catch (error) {
+  //     console.error('Error updating note:', error);
+  //   }
+  // };
 
-  const handleSubmit = (e) => {
-    // console.log(e);return;
-    e.preventDefault();
-    // if (currentIndex !== null) {
-      // updateNote(currentIndex, currentNote);
-    // } else {
-      addNote(currentNote);
-    // }
-    setCurrentNote('');
-  };
+  // const handleSubmit = (e) => {
+  //   // console.log(e);return;
+  //   e.preventDefault();
+  //   // if (currentIndex !== null) {
+  //     // updateNote(currentIndex, currentNote);
+  //   // } else {
+  //     addNote(currentNote);
+  //   // }
+  //   setCurrentNote('');
+  // };
 
   return (
     <div className='container mt-5'>
@@ -135,7 +135,7 @@ const NoteApp = () => {
               <button
                 className="btn btn-warning btn-sm mr-2"
                 onClick={() => {
-                  setCurrentNote(note.text);
+                  // setCurrentNote(note.text);
                   setCurrentIndex(index);
                 }}
               >
