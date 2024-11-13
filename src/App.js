@@ -1,7 +1,9 @@
+// require('dotenv').config();
 import React, { useState, useEffect } from 'react';
 import DataList from './Components/DataList';
 import Register from './Components/Register';
 import Login from './Components/Login';
+import UserNotes from './Components/UserNotes';
 // import swal from 'sweetalert';
 // import AddNewUser from './Components/AddNewUser';
 
@@ -58,13 +60,16 @@ const App = () => {
                             {/* <AddNewUser /> */}
                         </>
                     ) : (
-                        <div className='row main'>
-                            <p>Hai <b>{loggedInUser}</b></p>
-                            <div className='col-2'>
-                                <p>Welcome to SDK edits</p>
-                            </div>
-                            {/* <button style={style.buttonLogout} className='btn-primary' onClick={handleLogout}>Logout</button> */}
-                        </div>
+                        <>
+                            <UserNotes />
+                        </>
+                        // <div className='row main'>
+                        //     <p>Hai <b>{loggedInUser}</b></p>
+                        //     <div className='col-2'>
+                        //         <p>Welcome to SDK edits</p>
+                        //     </div>
+                        //     {/* <button style={style.buttonLogout} className='btn-primary' onClick={handleLogout}>Logout</button> */}
+                        // </div>
                     )}
                 </>
             ) : (

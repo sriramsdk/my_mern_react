@@ -16,8 +16,7 @@ const Register = () => {
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-    const url = 'https://visiting-lura-sdkgroup-184d32b4.koyeb.app/';
-    // const url = 'http://localhost:3500/';
+    const url = process.env.REACT_APP_API_URL;
 
     const onSubmit = async e => {
         e.preventDefault();

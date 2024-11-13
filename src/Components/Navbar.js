@@ -37,11 +37,11 @@ const Navbar = () => {
 };
   return (
     (loggedInUser || loggedInRole) && (
-      <nav className="navbar bg-primary">
-        <div className="navbar-left">
+      <nav style={style.navbar}>
+        <div style={style.navbarLeft}>
           <p><b>{loggedInUser}</b></p>
         </div>
-        <div className="navbar-right">
+        <div style={style.navbarRight}>
           <button style={style.buttonLogout} onClick={handleLogout} className="btn btn-danger">Logout</button>
         </div>
       </nav>
@@ -59,24 +59,28 @@ const style = {
     cursor: 'pointer',
   },
   navbar: {
-    width: '100%',
+    position: 'fixed', // Ensure the navbar stays at the top
+    top: 0,
+    left: 0,
+    width: '100vw', // Full width of the viewport
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#333',
     padding: '10px',
     color: '#fff',
+    zIndex: 1000, // Ensure the navbar stays above other content
   },
   navbarLeft: {
     flex: 1,
-    width: '50px',
+    paddingLeft: '20px',
+    paddingTop: '10px',
   },
   navbarRight: {
     flex: 1,
-    width: '100px',
     display: 'flex',
     justifyContent: 'flex-end',
-    marginRight: '10px'
+    paddingRight: '20px',
   },
 };
 

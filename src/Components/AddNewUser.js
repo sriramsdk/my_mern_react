@@ -3,6 +3,9 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AddUserModal = ({ fetchData }) => {
+
+  const url = process.env.REACT_APP_API_URL;
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -22,7 +25,7 @@ const AddUserModal = ({ fetchData }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3500/users', formData);
+      const response = await axios.post(url+'users', formData);
       if (response.status === 200) {
         setMessage('User added successfully!');
         fetchData();  // Refresh the data list after adding a user
