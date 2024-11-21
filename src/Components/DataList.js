@@ -15,9 +15,13 @@ const DataList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [loggedInRole, setLoggedInRole] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userroles, setRoles] = useState([]); // Holds roles
+  const [userData, setUserData] = useState(null);
+  const [id, setId] = useState(null);
   const url = process.env.REACT_APP_API_URL;
-  // const url = 'http://localhost:3500/';
-  // Fetch data from Node.js API
+  const allRoles = ['Admin', 'User'];
+
   useEffect(() => {
     const url = process.env.REACT_APP_API_URL;
     const user = localStorage.getItem('user');
@@ -40,12 +44,48 @@ const DataList = () => {
     fetchData();
   }, []);
 
-  const handleEdit = (userId) => {
+  const [active, setActive] = useState(''); // State to hold active status
+
+  const handleStatusChange = (event) => {
+    setActive(event.target.value); // Update state based on selection
+  };
+
+  const handleEdit = async (userId) => {
     // Perform edit action for the specific user
     console.log('Edit user with ID:', userId);
+    try{
+      const response = await axios.post(url+'users/getUser',{id: userId });
+      if(response){
+        const user = response.data.data;
+        setUserData(user); // Set user data to state
+        setId(user._id); // Set user data to state
+        setRoles(user.roles || []); // Set roles from user data
+        setActive(user.active)
+        setIsModalOpen(true); // Open modal
+      }
+    }catch(err){
+      swal(err.message, { icon: "warning" });
+      console.log(err.message);
+    }
     // You can redirect to an edit form or show a modal
   };
 
+  const handleEditRoleChange = (event) => {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setRoles((prevRoles) => [...prevRoles, value]); // Add role
+    } else {
+      setRoles((prevRoles) => prevRoles.filter((role) => role !== value)); // Remove role
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setUserData(null); // Clear user data when closing
+  };
+
+  
   // Handle delete action
   const handleDelete = async (userId) => {
     swal({
@@ -159,7 +199,31 @@ const DataList = () => {
     } finally {
         // setLoading(false);  // Stop loading after the request completes
     }
-};
+  };
+  
+  const UpdateUser = async e => {
+    e.preventDefault();
+
+    // Construct the data object to send in the API request
+    const data = {
+      id: id,  // Include the user ID
+      username: userData.username,
+      password: userData.password,
+      roles: userData.roles,
+      active: userData.active,
+    };
+
+    // setLoading(true);
+    try {
+        const res = await axios.patch(url+'users', data);
+        // console.log(res);
+        swal(res.data.message, { icon: "success" }).then((iscreated) => { if(iscreated){ window.location.reload() } });
+        setMessage(res.data.message); // Set success message
+    } catch (err) {
+        console.error(err.response.data);
+        setMessage(err.response.data.message); // Set error message
+    }
+  }
 
   return (
     (loggedInUser || loggedInRole) && (
@@ -174,6 +238,85 @@ const DataList = () => {
       />
       <button type='button' className='btn btn-primary ml-2' data-bs-toggle="modal" data-bs-target="#addUserModal" >Add User</button>
       <div>
+
+      {/* Edit Modal Component */}
+      {isModalOpen && (
+      <div
+        className="modal fade show"
+        style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+        aria-labelledby="editUserModalLabel"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Edit User</h5>
+              <button
+                type="button"
+                className="btn-close"
+                onClick={handleCloseModal}
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              {userData ? (
+                <form>
+                  <div className="mb-3">
+                    <label>Username</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={userData.username}
+                      onChange={(e) =>
+                        setUserData({ ...userData, username: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label>Password</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name='password'
+                    />
+                  </div>
+                  <label>Select Roles:</label>
+                  <div className="mb-3 mt-3">
+                    {allRoles.map((role) => (
+                      <label key={role} className="w-25">
+                        <input
+                          type="checkbox"
+                          value={role}
+                          checked={userroles.includes(role)} // Pre-check based on roles state
+                          onChange={handleEditRoleChange}
+                        />
+                        {role}
+                      </label>
+                    ))}
+                  </div>
+                  <div className='mb-3 mt-3'>
+                    <label>Status</label>
+                    <select className='status form-control' name='active' value={active} onChange={handleStatusChange}>
+                      <option value={true}>Active</option>
+                      <option value={false}>Inactive</option>
+                    </select>
+                  </div>
+                  <button type="submit" onClick={UpdateUser} className="btn btn-success">
+                    Update
+                  </button>
+                </form>
+
+                
+              ) : (
+                <p>Loading...</p>
+              )}
+              {message && <p className="mt-3">{message}</p>},
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+
 
       {/* Modal */}
       <div className="modal fade" id="addUserModal" tabIndex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
