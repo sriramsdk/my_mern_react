@@ -49,7 +49,7 @@ const App = () => {
     };
 
     return (
-        <div className="App">
+        <div className="App" style={{width: "150%",margin: "-3px 0px 0px -58px"}}>
             {/* Navbar should be rendered outside of the App's main content */}
             {/* <Navbar loggedInUser={loggedInUser} handleLogout={handleLogout} /> */}
             {loggedInUser ? (
@@ -90,7 +90,7 @@ const App = () => {
 
 const style = {
     button: {
-        width: '100%',
+        width: '350px',
         padding: '10px',
         backgroundColor: '#008000',
         color: '#fff',

@@ -29,9 +29,11 @@ const Login = ({ setLoggedInUser, setLoggedInRole }) => {
             const res = await axios.post(url + 'login', { username, password });
             // console.log(res.data.user_details);
             const userRole = res.data.user_details.user.role[0]; // Get the user's role
+            const user_id = res.data.user_details.user.id;
             // console.log(userRole);
             if (res.data.token.length !== '') {
                 localStorage.setItem('token', res.data.token);
+                localStorage.setItem('user_id', user_id);
                 localStorage.setItem('user', username);
                 localStorage.setItem('role', userRole);
                 setLoggedInUser(username);
