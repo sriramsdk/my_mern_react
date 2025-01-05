@@ -432,10 +432,9 @@ const DataList = () => {
 // Simple styling for the component
 const styles = {
   container: {
-    // width: '100%',
+    width: '100%',
     height: '100%',
     marginTop: '50px',
-    padding: '20px',
     textAlign: 'center',
   },
   header: {

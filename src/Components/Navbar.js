@@ -1,6 +1,8 @@
 // import { width } from '@fortawesome/free-solid-svg-icons/fa0';
 import React, { useEffect, useState } from 'react';
 import swal from 'sweetalert'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOut } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
     const [loggedInUser, setLoggedInUser] = useState(null);
@@ -42,7 +44,7 @@ const Navbar = () => {
           <p><b>{loggedInUser}</b></p>
         </div>
         <div style={style.navbarRight}>
-          <button style={style.buttonLogout} onClick={handleLogout} className="btn btn-danger">Logout</button>
+          <button style={style.buttonLogout} onClick={handleLogout}><FontAwesomeIcon icon={faSignOut} /></button>
         </div>
       </nav>
     )
@@ -50,19 +52,20 @@ const Navbar = () => {
 };
 
 const style = {
-  buttonLogout: {
-    padding: '10px 20px',
-    backgroundColor: '#d9534f',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '3px',
-    cursor: 'pointer',
-  },
+  // buttonLogout: {
+  //   padding: '10px 20px',
+  //   backgroundColor: '#d9534f',
+  //   color: '#fff',
+  //   border: 'none',
+  //   borderRadius: '3px',
+  //   cursor: 'pointer',
+  // },
   navbar: {
     position: 'fixed', // Ensure the navbar stays at the top
     top: 0,
     left: 0,
-    width: '100vw', // Full width of the viewport
+    width: '100%', // Full width of the viewport
+    height: '50px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
