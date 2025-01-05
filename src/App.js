@@ -4,6 +4,9 @@ import DataList from './Components/DataList';
 import Register from './Components/Register';
 import Login from './Components/Login';
 import UserNotes from './Components/UserNotes';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import '../src/App.css';
 // import swal from 'sweetalert';
 // import AddNewUser from './Components/AddNewUser';
 
@@ -11,7 +14,7 @@ const App = () => {
     const [loggedInUser, setLoggedInUser] = useState(null);
     const [loggedInRole, setLoggedInRole] = useState(null);
     const [isLogin, setIsLogin] = useState(true);
-
+    const [key, setKey] = useState('requests');
     // On mount, check localStorage for token, user, and role to persist login state
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
@@ -49,16 +52,28 @@ const App = () => {
     };
 
     return (
-        <div className="App" style={{width: "150%",margin: "-3px 0px 0px -58px"}}>
+        <div className="App" style={{width: "100%",margin:"50px 0 0 0"}}>
             {/* Navbar should be rendered outside of the App's main content */}
             {/* <Navbar loggedInUser={loggedInUser} handleLogout={handleLogout} /> */}
             {loggedInUser ? (
                 <>  
                     {loggedInRole === 'Admin' ? (
-                        <>
-                            <DataList />
-                            {/* <AddNewUser /> */}
-                        </>
+                        <Tabs
+                            id="uncontrolled-tab-example"
+                            className="mb-3"
+                            activeKey={key}
+                            onSelect={(k) => setKey(k)}
+                            justify
+                        >
+                            <Tab eventKey="requests" title="Requests">
+                                <UserNotes />
+                            </Tab>
+                            
+                            <Tab eventKey="users" title="Users">
+                                <DataList />
+                            </Tab>
+                            
+                        </Tabs>
                     ) : (
                         <>
                             <UserNotes />
@@ -108,7 +123,7 @@ const style = {
         cursor: 'pointer',
     },
     navbar: {
-        width: '900px',
+        width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
