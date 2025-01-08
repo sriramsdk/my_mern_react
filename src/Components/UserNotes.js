@@ -13,6 +13,7 @@ const NoteApp = () => {
   const [user, setUserId] = useState(null);
   const [responseMessage, setResponseMessage] = useState({ text: "", type: "" });
   const apiUrl = process.env.REACT_APP_API_URL;
+  const token = localStorage.getItem('token');
 
   // Fetch userId from local storage
   useEffect(() => {
@@ -81,7 +82,11 @@ const NoteApp = () => {
         // console.log(payload);
         // Update note
         // const noteId = notes[currentIndex]._id;
-        response = await axios.patch(`${apiUrl}notes`, payload);
+        response = await axios.patch(`${apiUrl}notes`, payload,{
+          headers: {
+              Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+          }
+        });
         const updatedNotes = notes.map((note, index) =>
           index === currentIndex ? response.data : note
         );
@@ -98,7 +103,11 @@ const NoteApp = () => {
         };
         // console.log(payload);
         // Create note
-        response = await axios.post(`${apiUrl}notes`, payload);
+        response = await axios.post(`${apiUrl}notes`, payload,{
+          headers: {
+              Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+          }
+        });
         setNotes([...notes, response.data]);
         setResponseMessage({ text: "Request created successfully", type: "success" });
         fetchNotes();
@@ -122,7 +131,10 @@ const NoteApp = () => {
         id : notes[index]._id
       };
       // console.log(payload);
-      await axios.delete(`${apiUrl}notes`,{ data : payload});
+      await axios.delete(`${apiUrl}notes`,{
+        headers: {
+            Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+        },data : payload });
       setNotes(notes.filter((_, i) => i !== index));
       setResponseMessage({ text: "Request deleted successfully", type: "success" });
     } catch (error) {

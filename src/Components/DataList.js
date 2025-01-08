@@ -21,9 +21,11 @@ const DataList = () => {
   const [id, setId] = useState(null);
   const url = process.env.REACT_APP_API_URL;
   const allRoles = ['Admin', 'User'];
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const url = process.env.REACT_APP_API_URL;
+    const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     const role = localStorage.getItem('role');
     if (user) {
@@ -33,7 +35,12 @@ const DataList = () => {
     const fetchData = async () => {
       try {
         // const response = await axios.get('https://visiting-lura-sdkgroup-184d32b4.koyeb.app/notes');
-        const response = await axios.get(url+'users');
+        const response = await axios.get(url+'users',{
+          headers: {
+              Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+          },
+      });
+        console.log(response);
         setData(response.data); // Assuming API returns an array
         setLoading(false);
       } catch (error) {
@@ -54,7 +61,12 @@ const DataList = () => {
     // Perform edit action for the specific user
     console.log('Edit user with ID:', userId);
     try{
-      const response = await axios.post(url+'users/getUser',{id: userId });
+      const response = await axios.post(url+'users/getUser',{ id: userId }, // Data payload
+        {
+            headers: {
+                Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+            },
+        });
       if(response){
         const user = response.data.data;
         setUserData(user); // Set user data to state
@@ -98,7 +110,14 @@ const DataList = () => {
     }).then(async (confirmDelete) => {
       if (confirmDelete) {
           try {
-            const response = await axios.delete(url+'users',{ data: {id:userId} }); // Assuming API has a delete endpoint
+            const response = await axios.delete(url+'users',{
+                headers: {
+                    Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+                },
+                data: {
+                    id: userId, // The payload to be sent in the request body
+                },
+            }); // Assuming API has a delete endpoint
             if(response){
               swal(response.data.message, { icon: "success" });
             }
@@ -185,11 +204,15 @@ const DataList = () => {
     e.preventDefault();
     // setLoading(true);
     try {
-        const res = await axios.post(url+'users', {
+        const res = await axios.post(url+'users',{
             username,
             password,
             roles
-        });
+          },{
+            headers: {
+                Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+            },
+          });
         // console.log(res);
         swal(res.data.message, { icon: "success" }).then((iscreated) => { if(iscreated){ window.location.reload() } });
         setMessage(res.data.message); // Set success message
@@ -215,7 +238,11 @@ const DataList = () => {
 
     // setLoading(true);
     try {
-        const res = await axios.patch(url+'users', data);
+        const res = await axios.patch(url+'users',data,{
+          headers: {
+              Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+          }
+        });
         // console.log(res);
         swal(res.data.message, { icon: "success" }).then((iscreated) => { if(iscreated){ window.location.reload() } });
         setMessage(res.data.message); // Set success message
